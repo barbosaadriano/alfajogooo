@@ -10,7 +10,7 @@ package br.com.munif.alfa.jogo.entidades;
  * @author munif
  */
 public class Heroi extends Personagem {
-
+    
     private String identidadeSecreta;
 
     public Heroi() {
@@ -41,5 +41,7 @@ public class Heroi extends Personagem {
     public String getDescricao() {
         return nome + "(" + identidadeSecreta + ")";
     }
+    
+    
 
 }

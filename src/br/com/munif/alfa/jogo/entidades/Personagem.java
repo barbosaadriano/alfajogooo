@@ -5,10 +5,19 @@
  */
 package br.com.munif.alfa.jogo.entidades;
 
+import br.com.munif.alfa.jogo.services.Transportavel;
+import java.util.Objects;
+
 /**
  * Esta é a classe Personagem que serve para
  */
-public abstract class Personagem {
+public abstract class Personagem implements Transportavel {
+
+    private static int contador = 0;
+
+    public static int getContador() {
+        return contador;
+    }
 
     protected String nome;
     /**
@@ -16,16 +25,34 @@ public abstract class Personagem {
      */
     private int energia;
 
-    public Personagem() {
+    private Lugar lugar;
+
+    public Personagem() { //Seria melhor colocar lugar aqui também
         System.out.println("Executando o construtor sem parâmetros de Personagem");
         nome = "Sem nome";
         energia = 100;
+        contador++;
     }
 
     public Personagem(String nome) {
         System.out.println("Executando o construtor com parâmetros de Personagem");
         this.nome = nome;
         energia = 100;
+        contador++;
+    }
+
+    public Lugar getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(Lugar lugarAtual) {
+        if (lugar != null) {
+            lugar.getPernsonagens().remove(this);
+        }
+
+        this.lugar = lugarAtual;
+        lugarAtual.getPernsonagens().add(this);
+
     }
 
     public void setNome(String nome) {
@@ -56,5 +83,32 @@ public abstract class Personagem {
         aRetornar = this.nome + " " + this.energia;
         return aRetornar;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object outro) {
+        if (this == outro) {
+            return true;
+        }
+        if (outro == null) {
+            return false;
+        }
+        if (getClass() != outro.getClass()) {
+            return false;
+        }
+        final Personagem other = (Personagem) outro;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }
